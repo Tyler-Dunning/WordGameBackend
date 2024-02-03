@@ -103,4 +103,6 @@ def wordhunt():
     for i in allWords:
         if(len(i) > 2 and i in csv_strings_set and i not in result[len(i) - 4]):
             result[len(i) - 4].append(i)
-    return result
+    response = jsonify(result)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
