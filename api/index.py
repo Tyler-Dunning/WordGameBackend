@@ -1,4 +1,4 @@
-from flask import Flask,request
+from flask import Flask,request, jsonify
 import csv
 
 app = Flask(__name__)
@@ -44,8 +44,9 @@ def anagrams():
     for i in allWords:
         if(len(i) > 3 and i in csv_strings_set and i not in result[len(i) - 4]):
             result[len(i) - 4].append(i) 
-    result.headers.add("Access-Control-Allow-Origin", "*")
-    return result
+    response = jsonify(result)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 @app.route("/wordhunt", methods=['GET'])
 def wordhunt():
