@@ -1,11 +1,8 @@
 from flask import Flask,request
-from flask_cors import CORS, cross_origin
 import csv
 
 app = Flask(__name__)
-cors = CORS(app)
 
-app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Specify the path to your CSV file and the column name containing the strings
 csv_file_path = 'words_altered.csv'
@@ -19,8 +16,7 @@ with open(csv_file_path, 'r', newline='', encoding='utf-8') as csvfile:
         string_from_csv = row[string_column_name]
         csv_strings_set.add(string_from_csv)
 
-@app.route("/anagrams")
-@cross_origin()
+@app.route("/anagrams", methods=['GET'])
 def anagrams():
     
     query = request.args.get('inputs')
@@ -48,10 +44,10 @@ def anagrams():
     for i in allWords:
         if(len(i) > 3 and i in csv_strings_set and i not in result[len(i) - 4]):
             result[len(i) - 4].append(i) 
+    result.headers.add("Access-Control-Allow-Origin", "*")
     return result
 
-@app.route("/wordhunt")
-@cross_origin()
+@app.route("/wordhunt", methods=['GET'])
 def wordhunt():
     
     query = request.args.get('inputs')
