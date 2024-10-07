@@ -4,11 +4,9 @@ import csv
 app = Flask(__name__)
 
 
-# Specify the path to your CSV file and the column name containing the strings
 csv_file_path = 'words_altered.csv'
-string_column_name = 'aaargh'  # Replace with your actual column name
+string_column_name = 'column name here'
 
-# Read the CSV file and create a set of strings
 csv_strings_set = set()
 with open(csv_file_path, 'r', newline='', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile)
